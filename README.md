@@ -8,7 +8,7 @@
 ## Installation
 
 
-###Required Environment Variables
+### Required Environment Variables
 
 ```NEWRELIC_KEY=Your NewRelic Key
 
@@ -24,7 +24,7 @@ dns.host.1=www.google.com
 
 dns.host.99= Up to 100 hosts to monitor
 ```
-###Run in Docker
+### Run in Docker
 Copy .env.template to .env Add domains to monitor, a monitor name and a New Relic license key.  Be sure to include the monitor name as
 dashboards depend on it
 
@@ -41,14 +41,14 @@ docker run --env-file .env dnsmon
 
 
 
-##Generated events
-####DnsMon:
+## Generated events
+#### DnsMon:
 
 dns_error set to 1 if error
 
 duration set to ms for DNS lookup
 
-####DNSMonTick:
+#### DNSMonTick:
 Metadata about state of DNS monitor sent evey three minutes
 
 
