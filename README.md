@@ -1,27 +1,56 @@
 [![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
 
-# [Name of Project] [build badges go here when available]
+# [Simple DNS Monitor]
 
->[Brief description - what is the project and value does it provide? How often should users expect to get releases? How is versioning set up? Where does this project want to go?]
+>This project is a quick and dirty DNS Monitor for New Relic.  It runs in a Docker Container or Kubernetes and polls specified DNS hosts.  This DNS monitor will determine if the host resolves as well as the time the resolution takes.  The monitor will report the ip(s) the hosts resolve to as well as the CNAME if applicable.
 
+![](dashboard.png)
 ## Installation
 
-> [Include a step-by-step procedure on how to get your code installed. Be sure to include any third-party dependencies that need to be installed separately]
+
+###Required Environment Variables
+
+```NEWRELIC_KEY=Your NewRelic Key
+
+MONITOR_NAME=NICKT1 Monitor Name
+
+POLL_INTERVAL=45 Number of seconds between polls
+
+dns.host.0=www.newrelic.com
+
+dns.host.1=www.google.com
+
+...
+
+dns.host.99= Up to 100 hosts to monitor
+```
+###Run in Docker
+Copy .env.template to .env Add domains to monitor, a monitor name and a New Relic license key.  Be sure to include the monitor name as
+dashboards depend on it
+
+docker build . -t dnsmon
+
+docker run --env-file .env dnsmon
+
 
 ## Getting Started
->[Simple steps to start working with the software similar to a "Hello World"]
+>Run in docker using above instructions.  Copy .env.template to .env .  Add your New Relic license key.  Add the domains you wish to monitor.  Optionally set the polling interval.
 
 ## Usage
->[**Optional** - Include more thorough instructions on how to use the software. This section might not be needed if the Getting Started section is enough. Remove this section if it's not needed.]
+>Query the Events listed below.  You may also import dns_dashboard.json and use it as is or as the basis for building your own.
 
 
-## Building
 
->[**Optional** - Include this section if users will need to follow specific instructions to build the software from source. Be sure to include any third party build dependencies that need to be installed separately. Remove this section if it's not needed.]
+##Generated events
+####DnsMon:
 
-## Testing
+dns_error set to 1 if error
 
->[**Optional** - Include instructions on how to run tests if we include tests with the codebase. Remove this section if it's not needed.]
+duration set to ms for DNS lookup
+
+####DNSMonTick:
+Metadata about state of DNS monitor sent evey three minutes
+
 
 ## Support
 
